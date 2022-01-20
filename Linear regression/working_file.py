@@ -17,3 +17,22 @@ y = np.array(data[predict])
 
 x_train, x_test, y_train, y_test = sklearn.model_selection.train_test_split(
     X, y, test_size=0.1)
+
+
+linear = linear_model.LinearRegression()
+
+linear.fit(x_train, y_train)
+
+accuracy = linear.score(x_test, y_test)
+
+print(accuracy)
+
+
+print(linear.coef_)
+print(linear.intercept_)
+
+
+predictions = linear.predict(x_test)
+
+for i in range(len(predictions)):
+    print(predictions[i], x_test[i], y_test[i])
