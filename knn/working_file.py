@@ -20,17 +20,15 @@ class_ = le.fit_transform(list(data["class"]))
 
 predict = "class"
 
-X = np.array((buying,
-             maint,
-             doors,
-             persons,
-             lug_boot,
-             safety,
-             class_))
-print(X.shape)
+data = np.array((buying,
+                 maint,
+                 doors,
+                 persons,
+                 lug_boot,
+                 safety,
+                 class_))
 
-
-data = pd.DataFrame(X.T, columns=[
+data = pd.DataFrame(data.T, columns=[
     "buying",
     "maint",
     "doors",
@@ -40,4 +38,15 @@ data = pd.DataFrame(X.T, columns=[
     "class_"]
 )
 
-print(data.head())
+X = data.drop(labels=['class_'], axis=1)
+y = data["class_"]
+
+x_train, x_test, y_train, y_test = sklearn.model_selection.train_test_split(
+    X, y, test_size=0.1)
+
+model = KNeighborsClassifier(n_neighbors=9)
+
+model.fit(x_train, y_train)
+accuracy = model.score(x_test, y_test)
+
+print(accuracy)
